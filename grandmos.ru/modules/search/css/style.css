@@ -1,0 +1,253 @@
+
+.search{
+  position: relative;
+}
+
+.search input{
+  height: 60px;
+  text-indent: 25px;
+  border: 2px solid #d6d4d4;
+  border-radius: 3px
+
+       }
+
+       .search input:focus{
+          box-shadow: none;
+          border: 2px solid #008000;
+       }
+
+       .search .fa-search{
+
+        position: absolute;
+        top: 20px;
+        left: 16px;
+
+       }
+       
+.searchMob {
+  position: relative;
+}
+
+.searchMob input{
+  height: 50px;
+  text-indent: 25px;
+  border: 2px solid #d6d4d4;
+  border-radius: 3px;
+}
+
+.searchMob input:focus{
+  box-shadow: none;
+  border: 2px solid #008000;
+}
+
+.searchMob .fa-search{
+  position: absolute;
+  top: 15px;
+  left: 16px;
+}   
+
+       .searchMainBtn button{
+          position: relative;
+          height: 60px;
+          background-color: #008000;
+          border-color: transparent;
+          opacity: 0.9;
+       }
+       
+       .searchMainBtn button:hover {
+         background-color: #008000;
+         opacity: 1;
+         transition: all ease 0.3s background-color, all ease 0.3s opacity;
+       }
+       
+       .search button {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          height: 50px;
+       }
+       
+       .btn-switch-active, .btn-switch-inactive, .btn-switch-active:hover, .btn-switch-inactive:hover {
+          color: #fff;
+          border-radius: 0;
+          height: 59px;
+          line-height: 45px;
+          margin-top: 0;
+       }
+       
+       .btn-switch-active {
+          background-color: #008000;
+          opacity: 0.9;
+          border: 2px solid #008000;
+       }
+       
+       .btn-switch-inactive {
+          background-color: transparent;
+          color: #000;
+          border: 2px solid #d6d4d4;
+       }
+       
+       .btn-switch-active:hover {
+          opacity: 1;
+       }
+       
+       .btn-switch-inactive:hover {
+          color: #000;
+          background-color: #d6d4d4;
+       }
+       
+       .bootstrap-select>.dropdown-toggle.bs-placeholder, .bootstrap-select>.dropdown-toggle.bs-placeholder:active, .bootstrap-select>.dropdown-toggle.bs-placeholder:focus, .bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+     color: #000;
+}
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+button, button:focus {
+    outline: none;
+}
+
+.searchItemImgDiv {
+    height: 250px;
+    overflow: hidden;
+}
+
+.searchItemImgDiv img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.searchFavoriteDiv {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.searchNotLike svg {
+   fill: transparent;
+   stroke: #FFF;
+}
+
+.searchNotLike:hover svg {
+    width: 33px;
+    height: 33px;
+    stroke: #FFF;
+    transition: 0.3s ease width, 0.3s ease height;
+}
+
+.searchActiveClass svg {
+    fill: #FFF;
+    stroke: #FFF;
+}
+
+.searchOnline {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    background-color: #202020;
+    color: #fff;
+    padding: 3px 14px;
+    font-weight: bold;
+    font-size: 13px;
+    border-radius: 5px;
+}
+
+.searchPreloaderDiv {
+    text-align: center;
+}
+
+.searchFilterBtnDiv {
+    
+}
+
+.searchFilterBtnDiv .searchMobFilterBtn {
+    background-color: #d6d4d4;
+    color: #202020;
+    border: none;
+    cursor: pointer;
+    height: 50px;
+}
+
+.searchFilterBtnDiv .searchMobFilterBtn svg {
+    width: 45px;
+    height: 45px;
+    margin: -2px 0 0 2px;
+}
+
+.searchPopupFilterPadding {
+    padding: 10px;
+}
+
+.searchBtnMob {
+    width: 45%;
+    height: 50px;
+    background-color: #008000;
+    border: 1px solid #008000;
+}
+
+.clearBtnMob {
+   width: 45%;
+   height: 50px;
+   background-color: transparent;
+   border: 1px solid #d6d4d4; 
+   color: #202020;
+   margin-left: 4%;
+}
+
+.bs-searchbox .form-control {
+    margin-bottom: 0;
+    width: 100%;
+    float: none;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    height: 30px;
+}
+
+.searchBaloonDiv p {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.searchColResults {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.searchLinkDiv {
+    color: #008000;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.searchLinkDiv:hover {
+    text-decoration: none;
+}
+
+.searchListLinkDiv {
+    height: 225px;
+    overflow-y: auto;
+}
+
+.searchDistrictDiv {
+    font-weight: normal; 
+    font-size: 17px;
+}
+
+.searchAddressDiv {
+    font-size: 16px;
+}
+
+.searchNameDiv {
+    font-size: 20px;
+}

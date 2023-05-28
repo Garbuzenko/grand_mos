@@ -1,0 +1,19 @@
+.searchGroupsPopupListDiv {
+    height: 500px;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.searchGroupsPopupListTitleDiv {
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.searchGroupsPopupListTitleDiv h5 {
+    margin-bottom: 0;
+}
+
+.searchGroupsPopupListScheduleDiv {
+    border-bottom: 1px solid #eee;
+    font-size: 17px;
+}
