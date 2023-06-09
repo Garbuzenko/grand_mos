@@ -39,9 +39,11 @@
 <!--[if lte IE 9]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
   	<![endif]-->
-    <a href="#main-wrapper" id="backto-top" class="back-to-top">
-        <i class="far fa-angle-double-up"></i>
-    </a>
+    <?if(empty($_COOKIE['user_id']) && empty($xc['url']['user'])):?>
+    <div data-id="jsPopupStatus" data-value="1" data-btn="jsGetQuiz" class="jsClickBtn quiz-fixed-btn show">
+        <img src="<?=DOMAIN;?>/img/main/survey.svg" /> опрос
+    </div>
+    <?endif;?>
 
     <!-- Preloader Start Here -->
     <div id="preloader"></div>
@@ -49,17 +51,31 @@
 
     <div class="my_switcher d-none d-lg-block">
         <ul>
-            <li title="Light Mode">
+            <li title="Светлая тема">
                 <a href="javascript:void(0)" class="setColor light" data-theme="light">
                     <i class="fal fa-lightbulb-on"></i>
                 </a>
             </li>
-            <li title="Dark Mode">
+            <li title="Темная тема">
                 <a href="javascript:void(0)" class="setColor dark" data-theme="dark">
                     <i class="fas fa-moon"></i>
                 </a>
             </li>
         </ul>
+
+        <ul>
+            <li title="Обычное зрение">
+                <a href="#"class="jsChangeFontSize active" id="jsFontSizeNormal" data-id="normal">
+                <i class="fas fa-eye-slash"></i>
+                </a>
+            </li>
+            <li title="Для слабовидящих">
+                <a href="#" class="jsChangeFontSize" id="jsFontSizeBig" data-id="big">
+                <i class="fas fa-eye"></i>
+                </a>
+            </li>
+        </ul>
+
     </div>
 
    <div id="main-wrapper" class="main-wrapper">
@@ -74,12 +90,12 @@
    
 <?endif;?>
 
-<?=$xc['js'];?>
-<?=$xc['body'];?>
+<?require_once $_SERVER['DOCUMENT_ROOT'].'/modules/forms/tmp.inc.php';?>
 
 <?=$xc['popup'];?>
 
-<?if($xc['no_metrika']==false):?>
-<?endif;?>
+<?=$xc['js'];?>
+<?=$xc['body'];?>
+
 </body>
 </html>

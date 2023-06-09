@@ -19,6 +19,12 @@ $xc['admin_main_module'] = ''; // модуль по умолчанию (для �
 $xc['ya_map'] = false; // яндекс карты
 $xc['bottom_popup_window'] = false;
 $xc['no_metrika'] = false;
+$xc['telegram'] = false;
+$xc['vk'] = false; 
 
 $xc['title'] = '';
 $xc['canonical'] = null;
+$xc['close'] = array(
+  'settings' => 1,
+  'my-groups' => 1
+);

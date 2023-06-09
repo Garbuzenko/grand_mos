@@ -1,0 +1,107 @@
+.quizFormBorder {
+    border: 2px solid #d6d4d4;
+}
+
+.quizFormBorder:focus {
+    border: 2px solid #d6d4d4;
+}
+
+.quizBtnPrev {
+    margin-right: 20px;
+    background-color: #d6d4d4 !important;
+    border: 1px solid #d6d4d4 !important;
+}
+
+.quizBtn {
+    border-radius: 16px !important;
+}
+
+.quizAnswerVarDiv {
+    border: 1px solid #d6d4d4;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 7px 15px;
+}
+
+.quizAnswerVarDiv:hover {
+    background-color: #d6d4d4;
+    transition: 0.3s ease background-color;
+}
+
+.quizAnswerVarDivActive {
+    border: 1px solid #455964 !important;
+    background-color: #455964 !important;
+    color: #fff !important;
+}
+
+.quizCheck {
+    float: right;
+}
+
+.quiz-fixed-btn {
+    position: fixed;
+    bottom: -40px;
+    right: 40px;
+    display: block;
+    width: 130px;
+    height: 50px;
+    line-height: 50px;
+    background: var(--color-primary);
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 7px;
+    opacity: 0;
+    -webkit-transform: scale(0.3);
+    -ms-transform: scale(0.3);
+    transform: scale(0.3);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 9;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+
+.quiz-fixed-btn img {
+    width: 35px;
+    height: 35px;
+}
+
+@media only screen and (max-width: 575px) {
+    .quiz-fixed-btn {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+    }
+}
+
+.quiz-fixed-btn:focus {
+    color: var(--color-white);
+}
+
+.quiz-fixed-btn.show {
+    bottom: 40px;
+    right: 40px;
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+}
+
+@media only screen and (max-width: 575px) {
+    .quiz-fixed-btn.show {
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+.quiz-fixed-btn.show:hover {
+    color: var(--color-white);
+    bottom: 30px;
+    opacity: 1;
+}
+
+@media only screen and (max-width: 575px) {
+    .quiz-fixed-btn.show:hover {
+        bottom: 10px;
+    }
+}

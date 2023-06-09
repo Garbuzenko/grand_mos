@@ -27,11 +27,11 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/lib/functions.php";
 if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/modules/popup/functions.php')) {
   include $_SERVER['DOCUMENT_ROOT'] . '/modules/popup/functions.php';
 }
-
+/*
 if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/modules/recom/functions.php')) {
   include $_SERVER['DOCUMENT_ROOT'] . '/modules/recom/functions.php';
 }
-
+*/
 $xc['url'] = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
 parse_str($xc['url'], $xc['url']);
 

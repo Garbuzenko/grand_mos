@@ -118,10 +118,14 @@ div.popupCloseDiv:hover {
 }
 
 .popupMessageDiv {
-    text-align: center;
     font-size: 22px;
     font-weight: bold;
     padding: 10px 15px;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .popupMessageDivMob {

@@ -1,5 +1,16 @@
 <?php
 
+function age($birthday) {
+    
+    $birthdate = str_replace('-','',$birthday);
+    $today = date('Ymd');
+    $diff = $today - $birthdate;
+    $diff = $diff / 10000;
+    $age = intval($diff);
+
+    return $age;
+}
+
 // функция для рассчёта вхождения точки в полигон
 function contains($point, $polygon) {
     
@@ -34,7 +45,6 @@ function contains($point, $polygon) {
     return $oddNodes;
 }
 
-/*
 function distance($lat_1, $lon_1, $lat_2, $lon_2) {
 
     $radius_earth = 6371; // Радиус Земли
@@ -48,7 +58,6 @@ function distance($lat_1, $lon_1, $lat_2, $lon_2) {
 
     return $d;
 }
-*/
 
 function str_replace_once($search, $replace, $text){ 
    $pos = strpos($text, $search); 
@@ -595,7 +604,11 @@ function geocoder($address)
         $lt = explode(' ', $pos);
         $lng = $lt[0];
         $lat = $lt[1];
-        return array($lng, $lat);
+        
+        $adr = $parse->GeoObjectCollection->featureMember->GeoObject->metaDataProperty->GeocoderMetaData->text;
+        $adr = (string)$adr;
+        
+        return array($lng, $lat, $adr);
     }
 
     return false;
@@ -1091,6 +1104,14 @@ function lang_function($num, $word, $result = 1) {
         3,
         4);
     $words_a = array(
+        'друг' => array(
+            'друг',
+            'друга',
+            'друзей'),
+        'ваш знакомый посещает этот курс' => array(
+            'ваш знакомый посещает этот курс',
+            'ваших знакомых посещают этот курс',
+            'ваших знакомых посещают этот курс'),
         'метр' => array(
             'метр',
             'метра',

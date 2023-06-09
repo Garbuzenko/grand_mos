@@ -1,0 +1,1 @@
+<?require_once $_SERVER['DOCUMENT_ROOT'].'/modules/class/includes/loginSiteForm.inc.php';?>

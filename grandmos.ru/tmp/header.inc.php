@@ -6,14 +6,20 @@
             <div class="axil-mainmenu">
                 <div class="container-fluid">
                     <div class="header-navbar">
-                        <div class="header-logo">
-                           <a href="<?=DOMAIN;?>"><img class="light-version-logo" src="<?=DOMAIN;?>/template/assets/media/logo.svg" alt="logo"></a>
+                    
+                        <?if(MOBILE==true):?>
+                          <div class="header-logo" style="margin-right: 40px;" id="jsHeaderLogo">
+                            <a href="<?=DOMAIN;?>"><img class="light-version-logo" src="<?=DOMAIN;?>/template/assets/media/logo.svg" alt="logo"></a>
                             <a href="<?=DOMAIN;?>"><img class="dark-version-logo" src="<?=DOMAIN;?>/template/assets/media/logo-3.svg" alt="logo"></a>
                             <a href="<?=DOMAIN;?>"><img class="sticky-logo" src="<?=DOMAIN;?>/template/assets/media/logo-2.svg" alt="logo"></a>
-                        </div>
+                          </div>
+                        <?endif;?>
+                        
                         <div class="header-main-nav">
+                            
                             <!-- Start Mainmanu Nav -->
                             <nav class="mainmenu-nav" id="mobilemenu-popup" style="z-index: 5000;">
+                                
                                 <div class="d-block d-lg-none">
                                     <div class="mobile-nav-header">
                                         <div class="mobile-nav-logo">
@@ -26,12 +32,41 @@
                                     </div>
                                 </div>
                                 <ul class="mainmenu">
-                                    <!-- <li><a href="https://grandmos.ru">О проекте</a></li> -->
-                                    <li>
-                                        <a href="/search?online=1">Онлайн</a>
+                                    <?if(MOBILE==true):?>
+                                    <?if(!empty($_COOKIE['user_id'])):?>
+                                    <li class="menu-item-has-children">
+                                        <a href="javascript:void(0);">Личный кабинет</a>
+                                        <ul class="axil-submenu">
+                                            <li><a href="https://datalens.yandex/1mrl27a0i32er?user=<?=$_COOKIE['user_id'];?>&g=<?=$xc['userInfo'][0]['gender_id'];?>&a=<?=$xc['userInfo'][0]['age'];?>&tab=w1" target="_blank">Аналитика</a></li>
+                                            <li><a href="<?=DOMAIN;?>/account/settings">Настройки</a></li>
+                                            <li><a href="<?=DOMAIN;?>/account/my-groups">Мои группы</a></li>
+                                            <li><a href="<?=DOMAIN.$_SERVER['PHP_SELF'];?>?exit=1">Выйти</a></li>
+                                        </ul>
                                     </li>
-                                  
-                      
+                                    <?else:?>
+                                    <li>
+                                      <a href="#" class="jsClickBtn" data-id="jsFormTmp" data-value="isUserForm" data-btn="getPopup">Личный кабинет</a>
+                                    </li>
+                                    <?endif;?>
+                                    <?endif;?>
+                                     
+                                     <?if(MOBILE==false):?>
+                                     <div class="header-logo" style="margin-right: 40px;" id="jsHeaderLogo">
+                                       <a href="<?=DOMAIN;?>"><img class="light-version-logo" src="<?=DOMAIN;?>/template/assets/media/logo.svg" alt="logo"></a>
+                                       <a href="<?=DOMAIN;?>"><img class="dark-version-logo" src="<?=DOMAIN;?>/template/assets/media/logo-3.svg" alt="logo"></a>
+                                       <a href="<?=DOMAIN;?>"><img class="sticky-logo" src="<?=DOMAIN;?>/template/assets/media/logo-2.svg" alt="logo"></a>
+                                     </div>
+                                     <?endif;?>
+                                    
+                                    <li class="menu-item-has-children">
+                                        <a href="javascript:void(0);">Сервисы</a>
+                                        <ul class="axil-submenu">
+                                           <li><a href="https://dialogs.yandex.ru/store/skills/71feb33f-pensionery-moskvy" target="_blank">Алиса</a></li>
+                                           <li><a href="https://t.me/grandmos_bot<?if(!empty($_COOKIE['user_id'])):?>?start=<?=$_COOKIE['user_id'];?><?endif;?>" target="_blank">Bot telegram</a></li>
+                                           <li><a href="https://vk.com/app51666613<?if(!empty($_COOKIE['user_id'])):?>#<?=$_COOKIE['user_id']?><?endif;?>" target="_blank">Приложение VK</a></li>
+                                           <li><a href="<?if(!empty($_COOKIE['user_id'])):?>https://datalens.yandex/1mrl27a0i32er?user=<?=$_COOKIE['user_id'];?>&g=<?=$xc['userInfo'][0]['gender_id'];?>&a=<?=$xc['userInfo'][0]['age'];?>&tab=w1<?else:?>https://datalens.yandex/1mrl27a0i32er?user=101412457&g=2&a=65&tab=w1<?endif;?>" target="_blank">Аналитика</a></li>
+                                        </ul>
+                                    </li>
 
 
                                     <?$level2 = db_query("SELECT distinct id_level2, level2 FROM dict WHERE id_level1=631 and group_count > 10 and online='Нет' ORDER BY group_count DESC");?>
@@ -115,9 +150,10 @@
                                     </li>
                                     <?endif;?>
                                     
+                                    <?if(MOBILE==false):?>
                                     <?if(empty($_COOKIE['user_id'])):?>
-                                    <li class="mainProfileLi jsClickBtn" title="Войти" data-id="jsFormTmp" data-value="signIn" data-btn="getPopup">
-                                      <div class="mainProfileRoundIconDiv"><i class="fa fa-user"></i></div>
+                                    <li class="mainProfileLi jsClickBtn" title="Войти" data-id="jsFormTmp" data-value="isUserForm" data-btn="getPopup">
+                                      <div id="jsCabinet" class="mainProfileRoundIconDiv"><i class="fa fa-user"></i></div>
                                     </li>
                                     <?else:?>
                                     
@@ -126,23 +162,16 @@
                                         <img src="<?=DOMAIN;?>/img/main/grandma.jpg" alt="" />
                                         </div>
                                         <ul class="axil-submenu">
-                                            <li><a href="https://datalens.yandex/1mrl27a0i32er?user=<?=$_COOKIE['user_id'];?>">Аналитика</a></li>
-                                            <li><a href="https://public.oprosso.sberbank.ru/p/cxidi4c8" target="_blank">Опрос</a></li>
+                                            <li><a href="https://datalens.yandex/1mrl27a0i32er?user=<?=$_COOKIE['user_id'];?>&g=<?=$xc['userInfo'][0]['gender_id'];?>&a=<?=$xc['userInfo'][0]['age'];?>&tab=w1">Аналитика</a></li>
+                                            <li><a href="<?=DOMAIN;?>/account/settings">Настройки</a></li>
+                                            <li><a href="<?=DOMAIN;?>/account/my-groups">Мои группы</a></li>
                                             <li><a href="<?=DOMAIN.$_SERVER['PHP_SELF'];?>?exit=1">Выйти</a></li>
                                         </ul>
                                     </li>
                                     
                                     <?endif;?>
-                                    <!-- <li><a href="/news">Новости</a></li> -->
+                                    <?endif;?>
                                     
-                                    <!--
-                                        <a href="https://login.mos.ru/sps/login/methods/password?bo=%2Fsps%2Foauth%2Fae%3Fscope%3Dprofile%2Bopenid%2Bcontacts%2Busr_grps%26response_type%3Dcode%26redirect_uri%3Dhttps%3A%2F%2Fwww.mos.ru%2Fapi%2Facs%2Fv1%2Flogin%2Fsatisfy%26client_id%3Dmos.ru">
-                                            Личный кабинет
-                                        </span>
-                                        </a>
-                                    </li> -->
-
-
                                 </ul>
                             </nav>
                             <!-- End Mainmanu Nav -->
@@ -150,20 +179,6 @@
                         <div class="header-action">
                             <ul class="list-unstyled">
                                 <?if(MOBILE==true):?>
-                                <?if (empty($_COOKIE['user_id'])):?>
-                                <li class="jsClickBtn d-lg-none d-block mainProfileIconMob" data-id="jsFormTmp" data-value="signIn" data-btn="getPopup" style="margin: 5px 7px 0 0; border-bottom: none;">
-                                   <i class="fa fa-user"></i>
-                                </li>&nbsp;&nbsp;
-                                <?else:?>
-                                <li style="margin: 6px 15px 0 0;">
-                                  <a href="<?=DOMAIN.$_SERVER['PHP_SELF'];?>?exit=1">
-                                  <div class="mainUserAvatar">
-                                    <img src="<?=DOMAIN;?>/img/main/grandma.jpg" alt="" />
-                                  </div>
-                                  </a>
-                                </li>
-                                <?endif;?>
-                                
                                 <li class="sidemenu-btn d-lg-block d-none">
                                     <button class="btn-wrap btn-dark" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenuRight">
                                         <span></span>
@@ -180,18 +195,32 @@
                                 </li>
                                 <?endif;?>
                                 <li class="my_switcher d-block d-lg-none">
+                                    
                                     <ul>
-                                        <li title="Light Mode">
+                                        <li title="Светлый режем">
                                             <a href="javascript:void(0)" class="setColor light" data-theme="light">
                                                 <i class="fal fa-lightbulb-on"></i>
                                             </a>
                                         </li>
-                                        <li title="Dark Mode">
+                                        <li title="Темный режим">
                                             <a href="javascript:void(0)" class="setColor dark" data-theme="dark">
                                                 <i class="fas fa-moon"></i>
                                             </a>
                                         </li>
                                     </ul>
+                                    <!--
+                                    <ul>
+                                        <li title="Обычное зрение">
+                                            <a href="javascript:void(0)" class="setColor light" data-theme="light">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </li>
+                                        <li title="Для слабовидящих">
+                                            <a href="javascript:void(0)" class="setColor dark" data-theme="dark">
+                                                <i class="fas fa-eye-slash"></i>
+                                            </a>
+                                        </li>
+                                    </ul> -->
                                 </li>
                             </ul>
                         </div>

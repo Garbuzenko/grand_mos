@@ -23,7 +23,31 @@
 <!-- Site Scripts -->
 
 
-<script src="<?=DOMAIN;?>/template/assets/js/app.js"></script>
+<script src="<?=DOMAIN;?>/template/assets/js/app3.js"></script>
 
 <script>var mobile = <?=$xc['mobile'];?>;</script>
 <script src="<?=DOMAIN;?>/js/<?=$xc['scripts'];?>"></script>
+
+<?if(empty($_COOKIE['user_id']) && !isset($_COOKIE['popup']) && $xc['telegram']==false && $xc['vk']==false && empty($vk_id)):?>
+<script>
+$(document).ready(function(){
+ setTimeout(function () {
+      $('#jsFormTmp').val('popupHello');
+      $('#getPopup').click();
+   }, 10000);
+ });
+</script>
+<?endif;?>
+
+
+<?if(!empty($_COOKIE['fontSize']) && $_COOKIE['fontSize']=='big'):?>
+<script>
+$(document).ready(function(){
+    $("body").css({"zoom":"115%"}); 
+    $('#jsHeaderLogo').addClass('hidden');
+    $('#jsCabinet').css({"width":"25px","height":"25px","font-size":"15px","line-height":"25px"}); 
+    $('#jsFontSizeNormal').removeClass('active');
+    $('#jsFontSizeBig').addClass('active');
+});
+</script>
+<?endif;?>

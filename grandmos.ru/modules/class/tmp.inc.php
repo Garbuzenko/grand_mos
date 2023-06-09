@@ -1,39 +1,30 @@
-<section class="banner banner-style-2">
-            <div class="container-fluid">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
-                        <div class="banner-content" data-sal="slide-up" data-sal-duration="1000" data-sal-delay="100">
-                            <h1 class="title" style="font-size: <?if(MOBILE==false):?>40px<?else:?>20px<?endif;?>;">«<?=$title;?>»</h1>
-                            <a href="#schedule" class="axil-btn btn-fill-white btn-large">Расписание</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <ul class="list-unstyled shape-group-18" heig>
-                <li class="shape shape-1" data-sal="slide-left" data-sal-duration="1000" data-sal-delay="100"><img width="65%" src="https://static2.mos.ru/upload/motilda/version-2b88b93dca22dd879dfeb7e810a9354f/Frame_117_1.png" alt="Shape"></li>
-                <!-- <li class="shape shape-2" data-sal="slide-right" data-sal-duration="1000" data-sal-delay="100"><img width="50%" src="https://static2.mos.ru/upload/motilda/version-2b88b93dca22dd879dfeb7e810a9354f/Frame_117_1.png" alt="Shape"></li> -->
-                <li class="shape shape-3" data-sal="zoom-in" data-sal-duration="500" data-sal-delay="600"><img src="/template/assets/media/others/bubble-16.png" alt="Shape"></li>
-                <li class="shape shape-4" data-sal="zoom-in" data-sal-duration="500" data-sal-delay="600"><img src="/template/assets/media/others/bubble-15.png" alt="Shape"></li>
-                <li class="shape shape-5" data-sal="zoom-in" data-sal-duration="500" data-sal-delay="600"><img src="/template/assets/media/others/bubble-14.png" alt="Shape"></li>
-                <li class="shape shape-6" data-sal="zoom-in" data-sal-duration="500" data-sal-delay="600"><img src="/template/assets/media/others/bubble-16.png" alt="Shape"></li>
-                <li class="shape shape-7" data-sal="slide-down" data-sal-duration="500" data-sal-delay="600"><img src="/template/assets/media/others/bubble-26.png" alt="Shape"></li>
-          </ul>
-</section>
+
         <!--=====================================-->
         <!--=       Расписание       =-->
         <!--=====================================-->
-        <section class="section mt-5">
+        <section class="section mt-5" style="border-top: 1px solid #d6d4d4; padding-top: 20px;">
             <div class="container">
-              <h5 class="title mb-1" style="padding: 0 20px;"><?=$title;?></h5>
+              <h3 class="title mb-1" style="padding: 0 20px;">«<?=$title;?>»</h3>
             
-              <div class="row" style="padding: 0 20px;">
+              <div class="row quizQuestionDark" style="padding: 0 20px;">
                 <div class="col-md-6" id="schedule">
                   <div class="mt-2"><?=$info[0]['d_level1'];?></div>
                   <div class="mt-2"><?=$info[0]['address'];?></div>
-                  <?if(!empty($schedule)):?>
+                  
+                  <?if (!empty($signedArr)):?>
                   <h5 class="title mt-4 mb-2">Расписание</h5>
                   <div class="classScheduleMainDiv">
-                  <?=$schedule;?>
+                    <?foreach($signedArr as $group_id=>$val):?>
+                      <div class="classGroupIdDiv">Группа #<?=$group_id;?></div>
+                      <?foreach($val as $k=>$v):?>
+                        <?=$v;?>
+                      <?endforeach;?>
+                      <div id="jsSignedBlock<?=$group_id;?>">
+                        <div class="axil-btn btn-fill-primary classSignedBtn jsClickBtn" data-id="jsSignedGroupIndex" data-value="<?=$group_id?>" data-btn="jsSignedGroup">
+                          Записаться
+                        </div>
+                      </div>
+                    <?endforeach;?>
                   </div>
                   <?endif;?>
                 </div>
@@ -141,19 +132,24 @@ ymaps.ready(init);
   
                  
                 </div>
+  <!--
             <ul class="shape-group-7 list-unstyled">
                 <li class="shape shape-1"><img src="/template/assets/media/others/circle-2.png" alt="circle"></li>
                 <li class="shape shape-2"><img src="/template/assets/media/others/bubble-2.png" alt="Line"></li>
                 <li class="shape shape-3"><img src="/template/assets/media/others/bubble-1.png" alt="Line"></li>
             </ul>
+  -->
         </section>
 
         <!--=====================================-->
         <!--=       Рекомендации для Вас      =-->
         <!--=====================================-->
         <?if(!empty($similar)):?>
-        <h3 class="title mb-1" style="<?if(MOBILE==false):?>padding: 0 50px;<?else:?>padding: 25px 0 0 20px;<?endif;?>">Похожие курсы</h3>
+        
         <section class="section section-padding-3 mt-5" id="jsAjaxLoadSearchResult" style="z-index: 0;">
-          <?=$similar;?>
+        <div class="container">
+          <h3 class="title mb-3">Похожие курсы</h3>
+        </div>
+         <?=$similar;?>
         </section>
         <?endif;?>

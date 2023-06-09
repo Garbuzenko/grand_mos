@@ -38,7 +38,7 @@ function db_query($sql,$type='s') {
          
          case 'i':
          if ($r = mysqli_insert_id($xc['db'])) $result = $r;
-         else $result = mysqli_error($xc['db']);
+         else $result = false;//mysqli_error($xc['db']);
          break;
          
          case 'd':

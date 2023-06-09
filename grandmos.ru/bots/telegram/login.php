@@ -1,48 +1,65 @@
 <?php
-$xc['lang'] = 'ru';
 
-// проверяем зарегистрирован ли пользователь в боте
+// достаём id пользователя
+$text = $arr['message']['text'];
+$user_id = str_replace('/start','',$text);
+$user_id = trim( clearData($user_id,'int') );
+$xc['user_id'] = 0;
+
+// проверяем зарегистрирован ли пользователь на сайте
 $a = db_query("SELECT *   
      FROM users  
-     WHERE tg_id='".$xc['chat_id']."' 
-     AND bot='".$xc['bot_uniq_name']."' 
+     WHERE user_id='".$user_id."'  
      LIMIT 1");
      
-if ( $a == false ) {
+if ( $a != false ) {
     
-    if ( !empty($xc['chat_id']) ) {
-        
-        // записываем данные пользователя в базу
-        $b = db_query("INSERT INTO users (
-        reg_date,
-        tg_id,
-        username,
-        first_name,
-        last_name,
-        activ,
-        bot) VALUES (
-        '".date('Y-m-d')."',
-        '".$xc['chat_id']."',
-        '".$arr['message']['chat']['username']."',
-        '".$arr['message']['chat']['first_name']."',
-        '".$arr['message']['chat']['last_name']."',
-        1,
-        '".$xc['bot_uniq_name']."'
-        )","i");
-        
-    }
+    $xc['user_id'] = $a[0]['user_id'];
     
+    // если пользователь зарегистрирован, то добавляем его данные из телеграм
+    $b = db_query("UPDATE users 
+    SET 
+    tg_id='".$xc['chat_id']."',
+    username='".$arr['message']['chat']['username']."',
+    first_name='".$arr['message']['chat']['first_name']."',
+    last_name='".$arr['message']['chat']['last_name']."',
+    activ=1 
+    WHERE user_id=".$a[0]['user_id']." 
+    LIMIT 1","u");
 }
 
 else {
+     
+     // проверяем зарегистрирован ли пользователь на сайте
+     $isUser = db_query("SELECT user_id 
+     FROM users WHERE tg_id='".$xc['chat_id']."' 
+     LIMIT 1");
+     
+     if ($isUser != false) {
+        $xc['user_id'] = $isUser[0]['user_id'];
+     }
+     
+         
+    if ( empty($arr['callback_query']['data']) && $isUser == false && $xc['module']!='services/index.php' && $xc['module']!='help/index.php' ) {
+        
+        $message = 'Вы зарегистрированы в проекте "Московское долголетие"?';
     
-    // если пользователь заново подписывается на бота
-    if ($a[0]['activ'] == 0) {
-        $b = db_query("UPDATE users 
-        SET activ=1 
-        WHERE id=".$a[0]['id']." 
-        LIMIT 1","u");
+        $btnArr[] = array(
+         'text' => 'Да',
+         'field' => 'callback_data',
+         'value' => 'login|sign_in.php|tg_message'
+        );
+    
+        $btnArr[] = array(
+         'text' => 'Нет',
+         'field' => 'callback_data',
+         'value' => 'login|quiz.php|tg_message'
+        );
+    
+        $replyMarkup = getButtons($btnArr);
+        sendMessage($xc['chat_id'],$message,$replyMarkup);
+        exit('ok');
     }
     
-    //$xc['lang'] = $a[0]['lang'];
+    
 }

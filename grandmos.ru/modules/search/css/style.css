@@ -171,17 +171,21 @@ button, button:focus {
 }
 
 .searchFilterBtnDiv .searchMobFilterBtn {
-    background-color: #d6d4d4;
-    color: #202020;
-    border: none;
     cursor: pointer;
-    height: 50px;
+    padding: 10px 20px 11px 20px;
+    color: #fff;
+    border-radius: 5px !important;
+    border: none;
+    font-size: 19px;
+    text-align: center;
 }
 
 .searchFilterBtnDiv .searchMobFilterBtn svg {
-    width: 45px;
-    height: 45px;
-    margin: -2px 0 0 2px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid #fff;
+    fill: #fff;
+    margin-left: 4px;
 }
 
 .searchPopupFilterPadding {
@@ -250,4 +254,27 @@ button, button:focus {
 
 .searchNameDiv {
     font-size: 20px;
+}
+
+.searchFormTitleDiv {
+   position: absolute;
+   top: 50px;
+   left: 10%;
+   right: 10%;
+   color: #fff;
+   font-size: 30px;
+   font-weight: bold;
+}
+
+.searchFormSubTitleDiv {
+   position: absolute;
+   top: 110px;
+   left: 10%;
+   right: 10%;
+   color: #fff;
+   font-size: 18px;
+}
+
+.searchUserFriendDiv svg {
+    margin: -3px 5px 0 0;
 }

@@ -1,7 +1,11 @@
 <?php
 
 $xc['modules'] = array(
-   '/start' => 'start/index.php'
+   '/start' => 'start/index.php',
+   '/recom' => 'selections/index.php',
+   '/groups' => 'groups/index.php',
+   '/services' => 'services/index.php',
+   '/help' => 'help/index.php'
 );
 
 if (empty($xc['module'])) {

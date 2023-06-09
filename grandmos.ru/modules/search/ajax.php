@@ -6,6 +6,14 @@ if (isset($_POST['form_id']) && $_POST['form_id']=='form_jsGetSearchText') {
     $page = intval($_POST['page']);
     $search = clearData($_POST['search']);
     $tmp = 'searchResult';
+    $distance = array();
+    $distance2 = array();
+    $user_id = 0;
+    
+    
+    if (!empty($_COOKIE['user_id'])) {
+       $user_id = clearData($_COOKIE['user_id'],'int');
+    }
     
     $arr['search'] = $search;
     
@@ -20,9 +28,24 @@ if (isset($_POST['form_id']) && $_POST['form_id']=='form_jsGetSearchText') {
     $groupBy = " GROUP BY a.group_index ";
     $userJoin = "";
     $userFields = "a.group_index,";
+    $userLng = null;
+    $userLat = null;
     
-    if (!empty($_POST['user_id'])) {
-        $user_id = intval($_POST['user_id']);
+    if (!empty($user_id)) {
+        
+        // достаёи координаты пользователя
+        $u = db_query("SELECT lng, lat 
+        FROM users 
+        WHERE user_id='".$user_id."' 
+        LIMIT 1");
+        
+        if ($u != false) {
+            if (!empty($u[0]['lng'])) {
+                $userLng = $u[0]['lng'];
+                $userLat = $u[0]['lat'];
+            }
+        }
+         
         $groupBy = " GROUP BY r.user_id, a.group_index ";
         $userJoin = " LEFT JOIN recomend_users_groups2 as r ON (a.group_index =  r.group_index  AND r.user_id='".$user_id."') ";
         $orderBy = " ORDER BY r.recommend DESC ";
@@ -45,8 +68,34 @@ if (isset($_POST['form_id']) && $_POST['form_id']=='form_jsGetSearchText') {
     ".$userJoin.$where.$groupBy.$orderBy.$limit;
     
     $groups = db_query($sql);
+    
+    if ($groups == false && strlen($search) > 28) {
+         ob_start();
+         require_once $_SERVER['DOCUMENT_ROOT'].'/modules/search/includes/emptySearchResult.inc.php';
+         $html = ob_get_clean();
+        
+         exit($html);
+    }
    
     if ($groups != false) {
+        
+         if (!empty($user_id) && !empty($userLng)) {
+            foreach ($groups as $b) {
+                $d = distance($userLat, $userLng, $b['lat'], $b['lng']);
+                
+                if ($d < 1) {
+                    $d = $d * 1000;
+                    $d = lang_function(round($d),'метр');
+                }
+                
+                else {
+                    $d = str_replace('.',',',round($d,'1')).' км.';
+                }
+                
+                $distance[ $b['group_index'] ] = $d;
+            }
+        }
+        
         
         $filters = serialize($arr);
         
@@ -69,6 +118,11 @@ if (isset($_POST['form_id']) && ($_POST['form_id']=='form_searchGroups' || $_POS
     $filtersUser = null;
     $groups = false;
     $user_id = 0;
+    $ajax_app = 0;
+    
+    if (!empty($_POST['ajax_app'])) {
+        $ajax_app = intval($_POST['ajax_app']);
+    }
     
     if (!empty($_POST['map'])) {
         $map = intval($_POST['map']);
@@ -180,16 +234,33 @@ if (isset($_POST['form_id']) && ($_POST['form_id']=='form_searchGroups' || $_POS
         $limit = "";
         
         $tmp = 'searchMapResult';
-        $where .= " AND a.online_id=0 ";
+        $where .= " AND a.online_id=0  AND a.last_date > '2023-01-01' ";
     }
     
     $orderBy = "";
     $groupBy = " GROUP BY a.group_index ";
     $userJoin = "";
     $userFields = "a.group_index,";
+    $userLng = null;
+    $userLat = null;
     
     if (!empty($_POST['user_id'])) {
+        
         $user_id = intval($_POST['user_id']);
+        
+        // достаёи координаты пользователя
+        $u = db_query("SELECT lng, lat 
+        FROM users 
+        WHERE user_id='".$user_id."' 
+        LIMIT 1");
+        
+        if ($u != false) {
+            if (!empty($u[0]['lng'])) {
+                $userLng = $u[0]['lng'];
+                $userLat = $u[0]['lat'];
+            }
+        }
+        
         $groupBy = " GROUP BY r.user_id, a.group_index ";
         $userJoin = " LEFT JOIN recomend_users_groups2 as r ON (a.group_index =  r.group_index  AND r.user_id='".$user_id."') ";
         $orderBy = " ORDER BY r.recommend DESC ";
@@ -216,10 +287,38 @@ if (isset($_POST['form_id']) && ($_POST['form_id']=='form_searchGroups' || $_POS
     ".$userJoin.$where.$groupBy.$orderBy.$limit;
      
     $groups = db_query($sql);
-   
+    
+    if ($groups == false) {
+         ob_start();
+         require_once $_SERVER['DOCUMENT_ROOT'].'/modules/search/includes/emptySearchResult.inc.php';
+         $html = ob_get_clean();
+        
+         exit($html);
+    }
+    
     if ($groups != false) {
         
         //$col = db_query("SELECT FOUND_ROWS() AS cnt");
+        
+        if (!empty($user_id) && !empty($userLng)) {
+            foreach ($groups as $b) {
+                $d = distance($userLat, $userLng, $b['lat'], $b['lng']);
+                
+                $distance2[ $b['group_id'] ] = $d;
+                
+                if ($d < 1) {
+                    $d = $d * 1000;
+                    $d = lang_function(round($d),'метр');
+                }
+                
+                else {
+                    $d = str_replace('.',',',round($d,'1')).' км.';
+                }
+                
+                $distance[ $b['group_index'] ] = $d;
+            }
+        }
+        
         
         if ($map == 1) {
             
@@ -228,10 +327,12 @@ if (isset($_POST['form_id']) && ($_POST['form_id']=='form_searchGroups' || $_POS
             
             foreach ($groups as $b) {
             
-            $b['d_level1'] = clearData($b['d_level1']);
-            $b['address'] = clearData($b['address']);
+              if (!empty($user_id) && !empty($distance2) && $distance2[ $b['group_id'] ] <= 3) {
+                
+                $b['d_level1'] = clearData($b['d_level1']);
+                $b['address'] = clearData($b['address']);
             
-            $arr['features'][] = array(
+                $arr['features'][] = array(
                 'type' => 'Feature',
                 'id' => $b['group_id'],
                 'geometry' => array('type' => 'Point', 'coordinates' => array(0 => $b['lat'], 1 => $b['lng'])),
@@ -242,12 +343,34 @@ if (isset($_POST['form_id']) && ($_POST['form_id']=='form_searchGroups' || $_POS
                     'hintContent' => clearData($b['level3']) ),
                 'options' => array('preset' => 'islands#blueCircleDotIconWithCaption'));
 
-             }
-             
-             $json = json_encode($arr, true);
-        }
+               }
+               
+               if (empty($user_id)) {
+                   $b['d_level1'] = clearData($b['d_level1']);
+                   $b['address'] = clearData($b['address']);
+            
+                   $arr['features'][] = array(
+                   'type' => 'Feature',
+                   'id' => $b['group_id'],
+                   'geometry' => array('type' => 'Point', 'coordinates' => array(0 => $b['lat'], 1 => $b['lng'])),
+                   'properties' => array(
+                   'type' => 'kurs',
+                   'balloonContent' => '<div class=\"searchBaloonDiv\"><p>'.$b['d_level1'].'</p><p>'.$b['address'].'</p></div>',
+                   'clusterCaption' => clearData($b['level3']),
+                   'hintContent' => clearData($b['level3']) ),
+                   'options' => array('preset' => 'islands#blueCircleDotIconWithCaption'));
+                 }
+               }
+               
+               $json = json_encode($arr, true);
+
+            }
         
         $filters = serialize($filters);
+        
+        if (!empty($ajax_app)) {
+            $xc['telegram'] = true;
+        }
         
         ob_start();
         require_once $_SERVER['DOCUMENT_ROOT'].'/modules/search/includes/'.$tmp.'.inc.php';

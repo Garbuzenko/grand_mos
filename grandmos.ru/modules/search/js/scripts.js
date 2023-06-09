@@ -11,6 +11,10 @@ $('body').on('click', '#jsToggleMap', function() {
     $('#jsMapSetting').val('0');
   }
   
+  if (mobile == 1) {
+     $('.sClosePopupWindowFilter').click();
+  }
+  
   $('#searchGroups').click();
 });
 

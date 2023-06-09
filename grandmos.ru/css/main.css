@@ -47,3 +47,31 @@
     font-size: 21px;
     text-align: center;
 }
+
+.mainRegLink {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.mainRegLink:hover {
+    text-decoration: none;
+}
+
+.mainmenu > .menu-item-has-children .axil-submenu li a:hover::after {
+    width: 0;
+}
+
+.active-dark-mode .dropdown, 
+.active-dark-mode .dropdown-toggle, 
+.active-dark-mode .dropdown-menu, 
+.active-dark-mode .dropdown-item,
+.active-dark-mode .mainMapBtn,
+.active-dark-mode .mainMobCloseBtn {
+    color: #D3D3D4 !important;
+    border-color: #525260 !important;
+    background-color: #27272E !important;
+}
+
+.active-dark-mode .quizQuestionDark {
+    color: #D3D3D4 !important;
+}

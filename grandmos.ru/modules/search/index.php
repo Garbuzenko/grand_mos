@@ -1,9 +1,18 @@
 <?php defined('DOMAIN') or exit(header('Location: /'));
 
+$user_id = 0;
+
+if (!empty($_COOKIE['user_id'])) {
+    $user_id = clearData($_COOKIE['user_id'],'int');
+}
+
+if (!empty($xc['url']['user'])) {
+    $user_id = clearData($xc['url']['user'],'int');
+}
+
 $searchUser = false;
 $searchResult = null;
 $searchUrl = false;
-$user_id = 0;
 $where = null;
 $ajaxLoadPage = 1;
 $num = 9;
@@ -11,11 +20,6 @@ $searchFilters = array();
 $level2Title = 'Расписание занятий';
 
 foreach($xc['url'] as $k=>$v) {
-        
-        // если в url передаётся id пользователя
-        if ($k == 'user') {
-            $user_id = intval($v);
-        }
         
         if ($k == 'online') {
             $searchUrl = true;
@@ -58,18 +62,17 @@ $direction = db_query("SELECT level3, level3_id
  FROM dict 
  GROUP BY level3_id");
 
+ if (!empty($where)) {
+    $where = str_replace_once('AND','WHERE',$where);
+ }
+
 // если это индивидуальный поиск по интересам пользователя
 if (!empty($user_id)) {
     $page = 1;
     include $_SERVER['DOCUMENT_ROOT'].'/modules/search/includes/searchUser2.php';
 }
 
-if ($searchUrl == true) {
-    
-    if (!empty($where)) {
-        $where = str_replace_once('AND','WHERE',$where);
-    }
-
+if ($searchUrl == true && empty($user_id)) {
 
 $groups = db_query("SELECT SQL_CALC_FOUND_ROWS group_id,
  address,
@@ -78,6 +81,7 @@ $groups = db_query("SELECT SQL_CALC_FOUND_ROWS group_id,
  level2,
  level3,
  online_id,
+ d_level1,
  img,
  lng,
  lat,
