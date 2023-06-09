@@ -2,8 +2,11 @@
 https://grandmos.ru/
 
 # Алиса https://github.com/Garbuzenko/grand_mos/tree/main/grandmos.ru/bots/alisa
-https://dialogs.yandex.ru/store/skills/70e5886c-babushki-moskv?utm_source=site&utm_medium=badge&utm_campaign=v1&utm_term=d1
+https://dialogs.yandex.ru/store/skills/71feb33f-pensionery-moskvy
 
 # Telegram https://github.com/Garbuzenko/grand_mos/tree/main/grandmos.ru/bots/telegram
-@grandmos_bot (https://t.me/grandmos_bot)
+https://t.me/grandmos_bot
+
+# VK Приложение
+https://vk.com/app51666613#200000087
  
